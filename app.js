@@ -2,7 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-// const dotenv = require("dotenv");
+const path = require("path");
+const dotenv = require("dotenv");
 
 const userRouter = require("./router/userRouter");
 const errorController = require("./controller/errorController");
@@ -11,7 +12,7 @@ const orderRouter = require("./router/orderRouter");
 const app = express();
 
 // environment variable
-// dotenv.config({ path: "config.env" });
+dotenv.config({ path: "config.env" });
 
 //morgan to log request in console
 app.use(morgan("common"));
@@ -37,6 +38,11 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+
+app.use(express.static(path.join(__dirname, "build")));
+app.get("/", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 app.use("/api", userRouter);
 app.use("/api/orders", orderRouter);
