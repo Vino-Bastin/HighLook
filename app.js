@@ -40,12 +40,13 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, "build")));
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 app.use("/api", userRouter);
 app.use("/api/orders", orderRouter);
+
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 //global error controller
 app.use(errorController);
