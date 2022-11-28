@@ -30,9 +30,9 @@ const pantSchema = mongoose.Schema({
   status: {
     type: String,
     enum: {
-      values: ["ordered", "preparing", "stretching", "ironing", "completed"],
+      values: ["ordered", "preparing", "stitching", "ironing", "completed"],
       message:
-        "{VALUE} is not allowed , allowed values are (ordered, preparing, stretching, ironing, completed)",
+        "{VALUE} is not allowed , allowed values are (ordered, preparing, stitching, ironing, completed)",
     },
     default: "ordered",
   },
@@ -103,8 +103,8 @@ pantSchema.post("findOneAndUpdate", async function (document) {
     ) {
       orderData.status = "ordered";
     } else if (
-      ["preparing", "stretching", "ironing"].includes(document.status) &&
-      ["preparing", "stretching", "ironing"].includes(
+      ["preparing", "stitching", "ironing"].includes(document.status) &&
+      ["preparing", "stitching", "ironing"].includes(
         orderData.lineItems.shirts.status
       )
     ) {
@@ -115,7 +115,7 @@ pantSchema.post("findOneAndUpdate", async function (document) {
     ) {
       orderData.status = "ready";
     }
-  } else if (["preparing", "stretching", "ironing"].includes(document.status)) {
+  } else if (["preparing", "stitching", "ironing"].includes(document.status)) {
     orderData.status = "preparing";
   } else if (["completed"].includes(document.status)) {
     orderData.status = "ready";
