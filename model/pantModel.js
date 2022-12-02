@@ -86,7 +86,6 @@ const pantSchema = mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true,
-    select: false,
   },
 });
 
@@ -96,19 +95,15 @@ pantSchema.post("findOneAndUpdate", async function (document) {
     strictPopulate: false,
   });
 
-  if (orderData.lineItems.shirts) {
+  if (
+    orderData.lineItems.shirts &&
+    !["preparing", "stitching", "ironing"].includes(document.status)
+  ) {
     if (
       ["ordered"].includes(document.status) &&
-      ["ordered"].includes(orderData.lineItems.pants.status)
+      ["ordered"].includes(orderData.lineItems.shirts.status)
     ) {
       orderData.status = "ordered";
-    } else if (
-      ["preparing", "stitching", "ironing"].includes(document.status) &&
-      ["preparing", "stitching", "ironing"].includes(
-        orderData.lineItems.shirts.status
-      )
-    ) {
-      orderData.status = "preparing";
     } else if (
       ["completed"].includes(document.status) &&
       ["completed"].includes(orderData.lineItems.shirts.status)

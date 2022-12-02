@@ -55,7 +55,6 @@ const orderSchema = mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true,
-    select: false,
   },
 });
 
