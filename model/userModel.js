@@ -58,6 +58,10 @@ const userSchema = mongoose.Schema({
     default: Date.now(),
     select: false,
   },
+  passwordResetToken: {
+    type: String,
+    select: false,
+  },
 });
 
 //mongoose middleware

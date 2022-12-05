@@ -7,6 +7,7 @@ const authController = require("../controller/authController");
 
 const orderRouter = express.Router();
 
+// middleware to check user is authenticated
 orderRouter.use(authController.isAuthenticated);
 
 orderRouter
