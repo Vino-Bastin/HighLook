@@ -132,9 +132,8 @@ exports.getPaymentDetails = catchAsync(async function (req, res, next) {
   }
 
   if (
-    new Date(req.query.endDate).getDate() -
-      new Date(req.query.startDate).getDate() <=
-    7
+    new Date(req.query.endDate) - new Date(req.query.startDate) <=
+    518400000
   ) {
     throw new Error(
       "please Start Date and End Date , that has at least one week different"
